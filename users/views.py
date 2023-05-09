@@ -35,17 +35,13 @@ def register(request):
 
 def profile(request):
     if request.method == 'POST':
-        print('pidor')
         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
-            print('chmo')
             form.save()
             return HttpResponseRedirect(reverse("users:profile"))
         else:
-            print('gay')
             print(form.errors)
     else:
-        print('govno')
         form = UserProfileForm(instance=request.user)
     context = {'title': 'Store - Профиль', 'form': form}
     return render(request, 'users/profile.html', context)
