@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from products.models import ProductCategory, Product, Basket
 from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -15,24 +16,34 @@ class IndexView(TemplateView):
         context['title'] = 'Store'
         return context
 
-# def index(request):
+
+class ProductsListView(ListView):
+    template_name = "products/products.html"
+    model = Product
+    paginate_by = 3
+
+    def get_queryset(self):
+        queryset = super(ProductsListView, self).get_queryset()
+        category_id = self.kwargs.get('category_id')
+        return queryset.filter(category_id=category_id) if category_id else queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductsListView, self).get_context_data()
+        context['title'] = 'Store - Каталог'
+        context['categories'] = ProductCategory.objects.all()
+        return context
+
+
+# def products(request, category_id=None, page_number=1):
+#     products = Product.objects.filter(category_id=category_id) if category_id else Product.objects.all()
+#     paginator = Paginator(products, per_page=3)
+#     product_paginator = paginator.page(page_number)
 #     content = {
-#         'title': 'Store',
-#         'isPromotion': False
+#         'title': 'Store - Каталог',
+#         'categories': ProductCategory.objects.all(),
+#         'products': product_paginator,
 #     }
-#     return render(request, 'products/index.html', content)
-
-
-def products(request, category_id=None, page_number=1):
-    products = Product.objects.filter(category_id=category_id) if category_id else Product.objects.all()
-    paginator = Paginator(products, per_page=3)
-    product_paginator = paginator.page(page_number)
-    content = {
-        'title': 'Store - Каталог',
-        'categories': ProductCategory.objects.all(),
-        'products': product_paginator,
-    }
-    return render(request, "products/products.html", content)
+#     return render(request, "products/products.html", content)
 
 
 @login_required
