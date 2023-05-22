@@ -2,9 +2,9 @@ from django.shortcuts import render, HttpResponseRedirect
 from products.models import ProductCategory, Product, Basket
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+# from django.views.generic.edit import CreateView
 
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
 
 
 class IndexView(TemplateView):
@@ -34,17 +34,12 @@ class ProductsListView(ListView):
         return context
 
 
-# def products(request, category_id=None, page_number=1):
-#     products = Product.objects.filter(category_id=category_id) if category_id else Product.objects.all()
-#     paginator = Paginator(products, per_page=3)
-#     product_paginator = paginator.page(page_number)
-#     content = {
-#         'title': 'Store - Каталог',
-#         'categories': ProductCategory.objects.all(),
-#         'products': product_paginator,
-#     }
-#     return render(request, "products/products.html", content)
-
+# class BasketCreateView(CreateView):
+#     model = Basket
+#
+#     def post(self, request, *args, **kwargs):
+#         product = Product.objects.get(id=self.kwargs.get('product_id'))
+#         baskets = Basket.objects.filter(user=request.user, product=product)
 
 @login_required
 def basket_add(request, product_id):
