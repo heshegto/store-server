@@ -38,19 +38,6 @@ class UserRegistrationView(CreateView):
         return context
 
 
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserRegistrationForm(data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Поздравляем! Вы успешно зарегестрировались!')
-#             return HttpResponseRedirect(reverse('users:login'))
-#     else:
-#         form = UserRegistrationForm()
-#     context = {'form': form}
-#     return render(request, 'users/register.html', context)
-
-
 class UserProfileView(UpdateView):
     model = User
     form_class = UserProfileForm
@@ -64,25 +51,6 @@ class UserProfileView(UpdateView):
         context['title'] = 'Store - Личный кабинет'
         context['baskets'] = Basket.objects.filter(user=self.object)
         return context
-
-# @login_required
-# def profile(request):
-#     if request.method == 'POST':
-#         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(reverse("users:profile"))
-#         else:
-#             print(form.errors)
-#     else:
-#         form = UserProfileForm(instance=request.user)
-#
-#     context = {
-#         'title': 'Store - Профиль',
-#         'form': form,
-#         'baskets': Basket.objects.filter(user=request.user),
-#     }
-#     return render(request, 'users/profile.html', context)
 
 
 def logout(request):
