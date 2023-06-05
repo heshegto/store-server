@@ -143,3 +143,8 @@ LOGOUT_REDIRECT_URL = '/'
 # Sending emails
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+if DEBUG:
+    DOMAIN_NAME = 'http://localhost:8000/'
+else:
+    DOMAIN_NAME = 'http://127.0.0.1:8000/'
