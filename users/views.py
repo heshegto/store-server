@@ -30,6 +30,7 @@ class UserProfileView(TitleMixin, UpdateView):
     form_class = UserProfileForm
     template_name = 'users/profile.html'
     title = 'Store - Личный кабинет'
+
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.object.id,))
 
@@ -42,6 +43,7 @@ class UserProfileView(TitleMixin, UpdateView):
 class EmailVerificationView(TitleMixin, TemplateView):
     title = 'Store - Подтверждение электронной почты'
     template_name = 'users/email_verification.html'
+
     def get(self, request, *args, **kwargs):
         code = kwargs['code']
         user = User.objects.get(email=kwargs['email'])

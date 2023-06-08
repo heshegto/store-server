@@ -143,6 +143,11 @@ LOGOUT_REDIRECT_URL = '/'
 # Sending emails
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_HOST = "smtp.mail.ru"
+# EMAIL_PORT = '465'
+EMAIL_HOST_USER = "user@mail.ru"
+# EMAIL_HOST_PASSWORD = "password"
+# EMAIL_USE_SSL = True
 
 if DEBUG:
     DOMAIN_NAME = 'http://localhost:8000/'
